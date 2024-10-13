@@ -2,6 +2,10 @@
 <gresources>
   <gresource prefix="/dashboard">
     <file>ui/main.ui</file>
+    <file>ui/settings_tab.ui</file>
+    <file>ui/xxt_bus_tab.ui</file>
+    <file>ui/qweather_tab.ui</file>
+    <file>ui/router_tab.ui</file>
   </gresource>
 </gresources>
 

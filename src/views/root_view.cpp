@@ -1,11 +1,75 @@
 #include "root_view.hpp"
 #include <gtkmm/builder.h>
-#include <gtkmm/applicationwindow.h>
+#include <gtkmm/button.h>
 
 #include <adwaita.h>
 
-static Glib::RefPtr<Glib::Object> tab_view;
+#include "utils/glib_utility.hpp"
+#include "views/ui_tab_info.hpp"
 
+class RootView
+{
+public:
+    RootView(const g_ptr<Gtk::Application> &app) {
+        builder = Gtk::Builder::create_from_resource("/dashboard/ui/main.ui");
+
+        main_window = builder->get_widget<Gtk::Window>("root_window");
+        app->add_window(*main_window);
+        main_window->show();
+
+        // buttons
+        btn_prev_tab = builder->get_widget<Gtk::Button>("btn_prev_tab");
+        btn_next_tab = builder->get_widget<Gtk::Button>("btn_next_tab");
+        btn_show_settings = builder->get_widget<Gtk::Button>("btn_show_settings");
+
+        btn_prev_tab->signal_clicked().connect([this] {
+            tab_view_page_mod(-1);
+        });
+        btn_next_tab->signal_clicked().connect([this] {
+            tab_view_page_mod(1);
+        });
+        btn_show_settings->signal_clicked().connect([this] {
+            adw_tab_view_set_selected_page(tab_view, tab_pages[T_Settings]);
+        });
+
+        // tab objects
+        tab_view = ADW_TAB_VIEW(gtk_builder_get_object(builder->gobj(), "tab_view"));
+        for (unsigned i=0; i<std::size(tab_infos); i++) {
+            const auto &info = tab_infos[i];
+            tab_pages[i] = info.setup(tab_view, &info);
+        }
+
+        // initial state
+        adw_tab_view_set_selected_page(tab_view, tab_pages[T_QWeather]);
+    }
+
+    ~RootView() {
+
+    }
+private:
+    void tab_view_page_mod(int diff) const {
+        constexpr int max = T_Settings;
+        auto const sel = adw_tab_view_get_selected_page(tab_view);
+        const auto sel_idx = adw_tab_view_get_page_position(tab_view, sel);
+        adw_tab_view_set_selected_page(tab_view, tab_pages[(sel_idx + max + diff) % max]);
+    }
+
+    g_ptr<Gtk::Builder> builder;
+
+    // root window
+    Gtk::Window *main_window;
+
+    // btns
+    Gtk::Button *btn_prev_tab;
+    Gtk::Button *btn_next_tab;
+    Gtk::Button *btn_show_settings;
+
+    // tab
+    AdwTabView *tab_view;
+    AdwTabPage *tab_pages[std::size(tab_infos)];
+};
+
+/*
 static void tabview_select_page(AdwTabView *tabview, int page) {
     if (tabview == nullptr)
         tabview = ADW_TAB_VIEW(tab_view->gobj());
@@ -42,14 +106,12 @@ void tab_settings(GtkButton* b, gpointer arg)
 }
 
 }
+*/
 
 void setup_root_view(const Glib::RefPtr<Gtk::Application> &app)
 {
-    auto builder = Gtk::Builder::create_from_resource("/dashboard/ui/main.ui");
-    
-    auto window = builder->get_widget<Gtk::ApplicationWindow>("root_window");
-    tab_view = builder->get_object("tab_view");
-
-    app->add_window(*window);
-    window->show();
+    auto rv = new RootView(app);
+    app->signal_shutdown().connect([rv] {
+            delete rv;
+        });
 }

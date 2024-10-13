@@ -2,144 +2,33 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.ApplicationWindow root_window {
-    title: _("我的工具箱 🧰");
+    title: bind tab_view.selected-page.title;
     height-request: 480;
     width-request: 800;
-    icon-name: "face-raspberry";
 
-    Gtk.ScrolledWindow {
-        Box {
-            orientation: vertical;
-            overflow: hidden;
+    Box {
+        orientation: vertical;
+        overflow: hidden;
 
-            Adw.HeaderBar {
-                Button {
-                    icon-name: "go-previous-symbolic";
-                    clicked => $tab_previous();
-                }
-
-                Button {
-                    icon-name: "go-next-symbolic";
-                    clicked => $tab_next();
-                }
-
-                Button {
-                    icon-name: "applications-system-symbolic";
-                    clicked => $tab_settings();
-                }
+        Adw.HeaderBar {
+            Button btn_prev_tab {
+                icon-name: "go-previous-symbolic";
+                tooltip-text: _("上一个页面");
             }
 
-            Adw.TabView tab_view {
-                Adw.TabPage {
-                    title: "Tab 1";
-
-                    child: Label {
-                        label: "Tab 1";
-                    };
-                }
-
-                Adw.TabPage {
-                    title: "Tab 2";
-
-                    child: Label {
-                        label: "Tab 2";
-                    };
-                }
-
-                Adw.TabPage {
-                    title: "Tab 3";
-
-                    child: Label {
-                        label: "Tab 3";
-                    };
-                }
-
-                Adw.TabPage {
-                    title: "Settings";
-
-                    child: Adw.PreferencesPage {
-                        title: "一般设置";
-
-                        Adw.PreferencesGroup {
-                            title: "测试";
-
-                            Adw.SwitchRow {
-                                title: "OK";
-                            }
-
-                            Adw.SwitchRow {
-                                title: "NO";
-                            }
-
-                            Adw.ComboRow {
-                                title: "更新间隔";
-
-                                model: Gtk.StringList {
-                                    strings: [
-                                        "1分钟",
-                                        "5分钟",
-                                        "10分钟",
-                                        "30分钟",
-                                        "1小时",
-                                    ];
-                                };
-                            }
-                        }
-
-                        Adw.PreferencesGroup {
-                            title: "测试";
-
-                            Adw.SwitchRow {
-                                title: "OK";
-                            }
-
-                            Adw.SwitchRow {
-                                title: "NO";
-                            }
-
-                            Adw.ComboRow {
-                                title: "更新间隔";
-
-                                model: Gtk.StringList {
-                                    strings: [
-                                        "1分钟",
-                                        "5分钟",
-                                        "10分钟",
-                                        "30分钟",
-                                        "1小时",
-                                    ];
-                                };
-                            }
-                        }
-
-                        Adw.PreferencesGroup {
-                            title: "测试";
-
-                            Adw.SwitchRow {
-                                title: "OK";
-                            }
-
-                            Adw.SwitchRow {
-                                title: "NO";
-                            }
-
-                            Adw.ComboRow {
-                                title: "更新间隔";
-
-                                model: Gtk.StringList {
-                                    strings: [
-                                        "1分钟",
-                                        "5分钟",
-                                        "10分钟",
-                                        "30分钟",
-                                        "1小时",
-                                    ];
-                                };
-                            }
-                        }
-                    };
-                }
+            Button btn_next_tab {
+                icon-name: "go-next-symbolic";
+                tooltip-text: _("下一个页面");
             }
+
+            Button btn_show_settings {
+                icon-name: "applications-system-symbolic";
+                tooltip-text: _("转到程序设置");
+            }
+        }
+
+        Adw.TabView tab_view {
+
         }
     }
 }
