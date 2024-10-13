@@ -1,0 +1,55 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ApplicationWindow root_window {
+    title: _("Dashboard");
+    height-request: 480;
+    width-request: 800;
+
+    Box {
+        orientation: vertical;
+
+        Adw.HeaderBar {
+            Button {
+                icon-name: "go-previous-symbolic";
+                clicked => $tab_previous();
+            }
+
+            Button {
+                icon-name: "go-next-symbolic";
+                clicked => $tab_next();
+            }
+
+            Button {
+                icon-name: "applications-system-symbolic";
+                clicked => $tab_settings();
+            }
+        }
+
+        Adw.TabView tab_view {
+            Adw.TabPage {
+                title: "Tab 1";
+
+                child: Label {
+                    label: "Tab 1";
+                };
+            }
+
+            Adw.TabPage {
+                title: "Tab 2";
+
+                child: Label {
+                    label: "Tab 2";
+                };
+            }
+
+            Adw.TabPage {
+                title: "Tab 3";
+
+                child: Label {
+                    label: "Tab 3";
+                };
+            }
+        }
+    }
+}
