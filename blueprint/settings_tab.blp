@@ -1,6 +1,89 @@
 using Gtk 4.0;
 using Adw 1;
 
-Gtk.Box root {
-    
+Gtk.ScrolledWindow root {
+    vexpand: true;
+
+    Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        title: _("和风天气设置");
+        description: "设置天气页面相关参数";
+
+        [header-suffix]
+        Button btn_save_weather_settings {
+          icon-name: "document-save";
+        }
+
+        Adw.EntryRow {
+          title: _("城市ID");
+          text: "1102345";
+        }
+
+        Adw.PasswordEntryRow {
+          title: _("API密钥");
+          text: "123456";
+        }
+
+        Adw.ComboRow {
+          title: _("更新间隔（分钟）");
+          model: Gtk.StringList {
+            strings: [
+                "1",
+                "5",
+                "10",
+                "30",
+                "60",
+            ];
+          };
+          selected: 3;
+        }
+      }
+
+      Adw.PreferencesGroup {
+        title: _("公交信息设置");
+        description: _("设置监视的公交信息列表");
+
+        [header-suffix]
+        Button btn_save_xxt_bus_settings {
+          icon-name: "document-save";
+        }
+
+        Adw.EntryRow {
+          title: _("公交信息列表");
+        }
+      }
+
+      Adw.PreferencesGroup {
+        title: _("路由信息");
+        description: _("配置路由信息页面的各种参数");
+
+        [header-suffix]
+        Button btn_save_router_settings {
+          icon-name: "document-save";
+        }
+
+        Adw.EntryRow {
+          title: _("路由器IP地址");
+        }
+
+        Adw.SpinRow {
+          title: _("Netdata 端口");
+          digits: 0;
+          adjustment: Gtk.Adjustment {
+            lower: 1;
+            upper: 65535;
+            step-increment: 1;
+          };
+          value: 9900.0;
+        }
+
+        Adw.ComboRow {
+          title: _("选择网卡");
+        }
+
+        Adw.ComboRow {
+          title: _("选择温度传感器");
+        }
+      }
+    }
 }
