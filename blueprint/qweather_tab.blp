@@ -1,6 +1,21 @@
 using Gtk 4.0;
 using Adw 1;
 
-Gtk.Box root {
-    
+Box root {
+    orientation: vertical;
+
+    // 当前天气情况
+    Box {
+        orientation: horizontal;
+
+        // 天气图标
+        Image {
+            width-request: 200;
+            height-request: 200;
+
+            file: "resource:///dashboard/icon/999.svg";
+        }
+
+        
+    }
 }
