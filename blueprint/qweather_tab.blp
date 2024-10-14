@@ -1,21 +1,25 @@
 using Gtk 4.0;
-using Adw 1;
 
 Box root {
     orientation: vertical;
-
     // 当前天气情况
     Box {
         orientation: horizontal;
-
         // 天气图标
         Image {
-            width-request: 200;
-            height-request: 200;
-
-            file: "resource:///dashboard/icon/999.svg";
+            width-request: 320;
+            height-request: 320;
+            pixel-size: 8;
+            resource: "/dashboard/icons/100.png";
         }
+    }
 
-        
+    Box {
+        orientation: horizontal;
+
+        // $InfoRow {
+        //     label: "测试";
+        //     value: "天河区";
+        // }
     }
 }

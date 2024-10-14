@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/dashboard">
+    <!-- UI files -->
     <file>ui/main.ui</file>
     <file>ui/settings_tab.ui</file>
     <file>ui/xxt_bus_tab.ui</file>
     <file>ui/qweather_tab.ui</file>
     <file>ui/router_tab.ui</file>
+
+    <!-- QWeather Icons -->
+    <file>icons/100.png</file>
+    <file>icons/101.png</file>
+    <file>icons/102.png</file>
+    <file>icons/103.png</file>
+    <file>icons/104.png</file>
+    <file>icons/150.png</file>
+    <file>icons/151.png</file>
+    <file>icons/152.png</file>
+    <file>icons/153.png</file>
+    <file>icons/300.png</file>
+    <file>icons/301.png</file>
+    <file>icons/302.png</file>
+    <file>icons/303.png</file>
+    <file>icons/304.png</file>
+    <file>icons/305.png</file>
+    <file>icons/306.png</file>
+    <file>icons/307.png</file>
+    <file>icons/308.png</file>
+    <file>icons/309.png</file>
+    <file>icons/310.png</file>
+    <file>icons/311.png</file>
+    <file>icons/312.png</file>
+    <file>icons/313.png</file>
+    <file>icons/314.png</file>
+    <file>icons/315.png</file>
+    <file>icons/316.png</file>
+    <file>icons/317.png</file>
+    <file>icons/318.png</file>
+    <file>icons/350.png</file>
+    <file>icons/351.png</file>
+    <file>icons/399.png</file>
+    <file>icons/400.png</file>
+    <file>icons/401.png</file>
+    <file>icons/402.png</file>
+    <file>icons/403.png</file>
+    <file>icons/404.png</file>
+    <file>icons/405.png</file>
+    <file>icons/406.png</file>
+    <file>icons/407.png</file>
+    <file>icons/408.png</file>
+    <file>icons/409.png</file>
+    <file>icons/410.png</file>
+    <file>icons/456.png</file>
+    <file>icons/457.png</file>
+    <file>icons/499.png</file>
+    <file>icons/500.png</file>
+    <file>icons/501.png</file>
+    <file>icons/502.png</file>
+    <file>icons/503.png</file>
+    <file>icons/504.png</file>
+    <file>icons/507.png</file>
+    <file>icons/508.png</file>
+    <file>icons/509.png</file>
+    <file>icons/510.png</file>
+    <file>icons/511.png</file>
+    <file>icons/512.png</file>
+    <file>icons/513.png</file>
+    <file>icons/514.png</file>
+    <file>icons/515.png</file>
+    <file>icons/900.png</file>
+    <file>icons/901.png</file>
+    <file>icons/999.png</file>
+    <file>icons/qweather.png</file>
   </gresource>
 </gresources>
 

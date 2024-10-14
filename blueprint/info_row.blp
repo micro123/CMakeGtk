@@ -1,0 +1,15 @@
+using Gtk 4.0;
+
+template $InfoRow: Box {
+    orientation: horizontal;
+    label: "LABEL";
+    value: "VALUE";
+
+    Label {
+        label: bind template.label;
+    }
+
+    Label {
+        label: bind template.value;
+    }
+}

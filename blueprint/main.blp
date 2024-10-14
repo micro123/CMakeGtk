@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.ApplicationWindow root_window {
     title: bind tab_view.selected-page.title;
-    height-request: 480;
+    height-request: 600;
     width-request: 800;
     resizable: false;
 
@@ -29,7 +29,10 @@ Adw.ApplicationWindow root_window {
         }
 
         Adw.TabView tab_view {
-
+            margin-top: 16;
+            margin-bottom: 16;
+            margin-start: 16;
+            margin-end: 16;
         }
     }
 }

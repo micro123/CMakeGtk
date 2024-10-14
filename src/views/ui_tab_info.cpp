@@ -19,6 +19,7 @@ const TabInfo tab_infos[T_CNT] = {
 
 AdwTabPage * create_page(AdwTabView *host, const TabInfo *info, GtkBuilder *&builder) {
     builder = gtk_builder_new_from_resource(info->ui_resource);
+    gtk_builder_add_from_resource(builder, "/dashboard/ui/info_row.ui", nullptr);
     GtkWidget *view = GTK_WIDGET(gtk_builder_get_object(builder, "root"));
     AdwTabPage *page = adw_tab_view_append_pinned(host, view);
     adw_tab_page_set_title(page, info->title);
