@@ -3,23 +3,14 @@ using Gtk 4.0;
 Box root {
     orientation: vertical;
     spacing: 8;
-    
     // 当前天气情况
     Box {
         orientation: horizontal;
-        spacing: 16;
-
-        // 天气图标
-        Image {
-            width-request: 320;
-            height-request: 320;
-            pixel-size: 8;
-            resource: "/dashboard/icons/100.png";
-        }
+        spacing: 8;
 
         Box {
             orientation: vertical;
-            spacing: 16;
+            spacing: 8;
 
             $InfoRow {
                 label: "城市：";
@@ -46,5 +37,65 @@ Box root {
                 value: "19:25";
             }
         }
+
+        Separator {
+            css-classes: [
+                ".vertical"
+            ];
+        }
+
+        // 天气图标
+        Image {
+            width-request: 300;
+            height-request: 300;
+            pixel-size: 8;
+            resource: "/dashboard/icons/100.png";
+        }
+    }
+
+    Separator {
+        css-classes: [
+            ".horizo​​ntal"
+        ];
+    }
+
+    Box {
+        valign: fill;
+        orientation: horizontal;
+        spacing: 2;
+
+        $SmallWeather {}
+
+        Separator {
+            css-classes: [
+                ".vertical"
+            ];
+        }
+
+        $SmallWeather {}
+
+        Separator {
+            css-classes: [
+                ".vertical"
+            ];
+        }
+
+        $SmallWeather {}
+
+        Separator {
+            css-classes: [
+                ".vertical"
+            ];
+        }
+
+        $SmallWeather {}
+
+        Separator {
+            css-classes: [
+                ".vertical"
+            ];
+        }
+
+        $SmallWeather {}
     }
 }

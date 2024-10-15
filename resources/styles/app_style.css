@@ -12,3 +12,8 @@ label {
     font-size: 42px;
     color: white;
 }
+
+.small_weather_label {
+    font-size: 24px;
+    color: white;
+}

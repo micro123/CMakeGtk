@@ -10,6 +10,7 @@
 
     <!-- Widgets -->
     <file>ui/info_row.ui</file>
+    <file>ui/small_weather.ui</file>
 
     <!-- Styles -->
     <file>styles/app_style.css</file>

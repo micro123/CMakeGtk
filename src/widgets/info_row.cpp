@@ -73,6 +73,7 @@ static void info_row_class_init(InfoRowClass *klass)
   info_row_properties[VALUE] = g_param_spec_string("value", "value", "value of the row", "", G_PARAM_READWRITE);
   g_object_class_install_properties(gobj_class, G_N_ELEMENTS(info_row_properties), info_row_properties);
 
+  // child
   gtk_widget_class_set_template_from_resource(widget_class,
                                               "/dashboard/ui/info_row.ui");
   gtk_widget_class_bind_template_child_full(GTK_WIDGET_CLASS(klass), "label", 1,

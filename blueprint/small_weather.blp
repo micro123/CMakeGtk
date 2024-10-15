@@ -1,0 +1,34 @@
+using Gtk 4.0;
+
+template $SmallWeather : Box {
+    orientation: vertical;
+    halign: center;
+    vexpand: true;
+    hexpand: true;
+
+    Image {
+        width-request: 80;
+        height-request: 80;
+        resource: "/dashboard/icons/999.png";
+    }
+
+    Label {
+        label: "多云";
+        css-classes: ["small_weather_label"];
+    }
+
+    Label {
+        label: "17~25℃";
+        css-classes: ["small_weather_label"];
+    }
+
+    Label {
+        label: "46%";
+        css-classes: ["small_weather_label"];
+    }
+
+    Label {
+        label: "17:00";
+        css-classes: ["small_weather_label"];
+    }
+}
