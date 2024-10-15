@@ -2,3 +2,4 @@
 *.ui
 resources/ui
 .idea/
+.cache/

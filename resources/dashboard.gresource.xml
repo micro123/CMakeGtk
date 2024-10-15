@@ -8,6 +8,12 @@
     <file>ui/qweather_tab.ui</file>
     <file>ui/router_tab.ui</file>
 
+    <!-- Widgets -->
+    <file>ui/info_row.ui</file>
+
+    <!-- Styles -->
+    <file>styles/app_style.css</file>
+
     <!-- QWeather Icons -->
     <file>icons/100.png</file>
     <file>icons/101.png</file>

@@ -2,9 +2,13 @@ using Gtk 4.0;
 
 Box root {
     orientation: vertical;
+    spacing: 8;
+    
     // 当前天气情况
     Box {
         orientation: horizontal;
+        spacing: 16;
+
         // 天气图标
         Image {
             width-request: 320;
@@ -12,14 +16,35 @@ Box root {
             pixel-size: 8;
             resource: "/dashboard/icons/100.png";
         }
-    }
 
-    Box {
-        orientation: horizontal;
+        Box {
+            orientation: vertical;
+            spacing: 16;
 
-        // $InfoRow {
-        //     label: "测试";
-        //     value: "天河区";
-        // }
+            $InfoRow {
+                // label: "测试";
+                // value: "天河区";
+            }
+
+            $InfoRow {
+                // label: "测试";
+                // value: "天河区";
+            }
+
+            $InfoRow {
+                // label: "测试";
+                // value: "天河区";
+            }
+
+            $InfoRow {
+                // label: "测试";
+                // value: "天河区";
+            }
+
+            $InfoRow {
+                // label: "测试";
+                // value: "天河区";
+            }
+        }
     }
 }
