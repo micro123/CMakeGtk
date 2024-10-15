@@ -33,7 +33,7 @@ Box root {
             }
 
             $InfoRow {
-                label: "更新时间：";
+                label: "更新：";
                 value: "19:25";
             }
         }
@@ -63,6 +63,14 @@ Box root {
         valign: fill;
         orientation: horizontal;
         spacing: 2;
+
+        $SmallWeather {}
+
+        Separator {
+            css-classes: [
+                ".vertical"
+            ];
+        }
 
         $SmallWeather {}
 
