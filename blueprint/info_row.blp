@@ -2,16 +2,25 @@ using Gtk 4.0;
 
 template $InfoRow: Box {
     orientation: horizontal;
-    spacing: 8;
+    vexpand: false;
+    spacing: 2;
 
     Label label {
-        width-request: 120;
-        label: "LABEL";
+        valign: fill;
+        xalign: 1.0;
+        yalign: 0.83;
+        
+        width-request: 100;
+
+        label: bind template.label;
         css-classes: ["info_row_label"];
     }
 
     Label value {
-        label: "VALUE";
+        xalign: 0.0;
+        hexpand: true;
+
+        label: bind template.value;
         css-classes: ["info_row_value"];
     }
 }

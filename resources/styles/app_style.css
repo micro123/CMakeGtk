@@ -1,3 +1,14 @@
+label {
+    border: solid 1px;
+    border-color: red;
+}
+
 .info_row_label {
+    font-size: 14px;
+    color: darkgray;
+}
+
+.info_row_value {
     font-size: 42px;
+    color: white;
 }
