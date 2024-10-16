@@ -14,19 +14,19 @@ Box root {
         title: _("和风天气设置");
         description: "设置天气页面相关参数";
 
-        Adw.EntryRow {
+        Adw.EntryRow qweather_city_id {
           title: _("城市ID");
           text: "1102345";
           show-apply-button: true;
         }
 
-        Adw.EntryRow {
+        Adw.EntryRow qweather_api_key {
           title: _("API密钥");
           text: "123456";
           show-apply-button: true;
         }
 
-        Adw.ComboRow {
+        Adw.ComboRow qweather_update_interval {
           title: _("更新间隔（分钟）");
 
           model: Gtk.StringList {
@@ -47,9 +47,25 @@ Box root {
         title: _("公交信息设置");
         description: _("设置监视的公交信息列表");
 
-        Adw.EntryRow {
+        Adw.EntryRow xxt_bus_bus_info {
           title: _("公交信息列表");
           show-apply-button: true;
+        }
+
+        Adw.ComboRow xxt_bus_update_interval {
+          title: _("更新间隔（分钟）");
+
+          model: Gtk.StringList {
+            strings: [
+              "1",
+              "5",
+              "10",
+              "30",
+              "60",
+            ];
+          };
+
+          selected: 3;
         }
       }
 
@@ -57,12 +73,12 @@ Box root {
         title: _("路由信息");
         description: _("配置路由信息页面的各种参数");
 
-        Adw.EntryRow {
+        Adw.EntryRow router_ip_addr {
           title: _("路由器IP地址");
           show-apply-button: true;
         }
 
-        Adw.SpinRow {
+        Adw.SpinRow router_port_num {
           title: _("Netdata 端口");
           digits: 0;
           snap-to-ticks: true;
@@ -76,12 +92,18 @@ Box root {
           value: 19999.0;
         }
 
-        Adw.ComboRow {
+        Adw.ComboRow router_ethernet_device {
           title: _("选择网卡");
         }
 
-        Adw.ComboRow {
+        Adw.ComboRow router_thermal_sensor {
           title: _("选择温度传感器");
+        }
+
+        [header-suffix]
+        Button router_fetch_devices {
+          label: _("更新设备信息");
+          icon-name: "view-refresh";
         }
       }
     }

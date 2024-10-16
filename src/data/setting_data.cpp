@@ -42,10 +42,14 @@ public:
 
     std::string  GetValue(const char *key, const char* default_value) {
         GError *err = nullptr;
-        std::string ret = g_key_file_get_string(keyfile_, GROUP_NAME, key, &err);
+        std::string ret;
+        gchar *cstr = g_key_file_get_string(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
             g_error_free(err);
+        } else {
+            ret.assign(cstr);
+            g_free(cstr);
         }
         return ret;
     }
@@ -109,7 +113,7 @@ void    settings_set_double(const char *key, double value) {
 std::string settings_get_str(const char *key, const std::string def) {
     return Settings::instance().GetValue(key, def.c_str());
 }
-void settings_set_int(const char *key, const std::string &value) {
+void settings_set_str(const char *key, const std::string &value) {
     return Settings::instance().SetValue(key, value);
 }
 

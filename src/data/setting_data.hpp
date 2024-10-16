@@ -25,7 +25,7 @@ double  settings_get_double(const char *key, double def);
 void    settings_set_double(const char *key, double value);
 
 std::string settings_get_str(const char *key, const std::string def);
-void settings_set_int(const char *key, const std::string &value);
+void settings_set_str(const char *key, const std::string &value);
 
 void settings_reload();
 void settings_save();
