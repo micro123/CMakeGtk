@@ -8,15 +8,16 @@
 
 class SettingBussiness {
 public:
-    SettingBussiness(GtkBuilder *builder) {
-        auto b = Glib::wrap(builder);
-        auto somebtn = b->get_widget<Gtk::Button>("btn_save_weather_settings");
-        somebtn->signal_clicked().connect([]{
-            settings_save();
-        });
+    SettingBussiness(GtkBuilder *builder, AdwTabPage *page) {
+        // root widget
+        auto root = GTK_WIDGET(gtk_builder_get_object(builder, "root"));
     }
     ~SettingBussiness() {
-        int a = 0;
+        
+    }
+
+    void reload() {
+        g_log("Dashboard", G_LOG_LEVEL_WARNING, "Setting Reload");
     }
 
 private:
@@ -24,10 +25,15 @@ private:
 
 static void del(SettingBussiness *s) { delete s; }
 
-AdwTabPage * create_settings_tab(AdwTabView *host, const TabInfo *info) {
+static void page_attached(SettingBussiness *b) {
+    b->reload();
+}
+
+AdwTabPage *create_settings_tab(AdwTabView *host, const TabInfo *info, page_active_cb *active_cb) {
     GtkBuilder *builder = nullptr;
     auto p = create_page(host, info, builder);
-    auto x = new SettingBussiness(builder);
-    g_signal_connect(host, "destroy", G_CALLBACK(del), x);
+    auto x = new SettingBussiness(builder, p);
+    g_object_set_data(G_OBJECT(p), PAGE_PRIVATE_DATA_KEY, x);
+    *active_cb = (page_active_cb)page_attached;
     return p;
 }

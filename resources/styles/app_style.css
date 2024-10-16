@@ -16,6 +16,17 @@ label {
 }
 
 .small_weather_label {
-    font-size: 24px;
+    font-size: 22px;
     color: white;
+}
+
+.custom_button {
+    font-size: 28px;
+    border-radius: 36px;
+    border-color: blueviolet;
+    padding: 8px 48px;
+}
+
+.positive_button {
+    color: rgb(63, 225, 74);
 }

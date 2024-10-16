@@ -29,29 +29,52 @@ public:
             tab_view_page_mod(1);
         });
         btn_show_settings->signal_clicked().connect([this] {
-            adw_tab_view_set_selected_page(tab_view, tab_pages[T_Settings]);
+            adw_tab_view_set_selected_page(tab_view, tab_pages[T_Settings].page);
         });
 
         // tab objects
         tab_view = ADW_TAB_VIEW(gtk_builder_get_object(builder->gobj(), "tab_view"));
+        memset(tab_pages, 0, sizeof(tab_pages));
         for (unsigned i=0; i<std::size(tab_infos); i++) {
             const auto &info = tab_infos[i];
-            tab_pages[i] = info.setup(tab_view, &info);
+            tab_pages[i].page = info.setup(tab_view, &info, &tab_pages[i].active_cb);
         }
 
         // initial state
-        adw_tab_view_set_selected_page(tab_view, tab_pages[T_QWeather]);
+        adw_tab_view_set_selected_page(tab_view, tab_pages[T_QWeather].page);
+
+        // page_attached
+        g_signal_connect(G_OBJECT(tab_view), "notify::selected-page", G_CALLBACK(&RootView::OnTabPageSelect), this);
     }
 
     ~RootView() {
 
     }
 private:
+    static void OnTabPageSelect(GObject *tab_view, GParamSpec *spec, RootView *pThis)
+    {
+        GValue page;
+        g_object_get_property(tab_view, spec->name, &page);
+        AdwTabPage *adw_tab_page = ADW_TAB_PAGE(g_value_get_object(&page));
+        pThis->NotifyPageSelected(adw_tab_page);
+    }
+
+    void NotifyPageSelected(AdwTabPage *p)
+    {
+        for (const auto &x: tab_pages) {
+            if (p == x.page) {
+                if (x.active_cb) {
+                    x.active_cb(g_object_get_data(G_OBJECT(p), PAGE_PRIVATE_DATA_KEY));
+                }
+            }
+        }
+    }
+
     void tab_view_page_mod(int diff) const {
         constexpr int max = T_Settings;
         auto const sel = adw_tab_view_get_selected_page(tab_view);
         const auto sel_idx = adw_tab_view_get_page_position(tab_view, sel);
-        adw_tab_view_set_selected_page(tab_view, tab_pages[(sel_idx + max + diff) % max]);
+        adw_tab_view_set_selected_page(tab_view, tab_pages[(sel_idx + max + diff) % max].page);
     }
 
     g_ptr<Gtk::Builder> builder;
@@ -66,7 +89,11 @@ private:
 
     // tab
     AdwTabView *tab_view;
-    AdwTabPage *tab_pages[std::size(tab_infos)];
+    // AdwTabPage *tab_pages[std::size(tab_infos)];
+    struct PageData {
+        AdwTabPage     *page;
+        page_active_cb  active_cb;
+    } tab_pages[std::size(tab_infos)];
 };
 
 /*
@@ -114,4 +141,11 @@ void setup_root_view(const Glib::RefPtr<Gtk::Application> &app)
     app->signal_shutdown().connect([rv] {
             delete rv;
         });
+}
+
+extern "C" {
+    G_MODULE_EXPORT
+    void fuck_you(AdwTabView *self, AdwTabPage *page, gint pos, gpointer user) {
+        int a = 0;
+    }
 }
