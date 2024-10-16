@@ -1,7 +1,7 @@
-#include "info_row.hpp"
-
 #include <glib-object.h>
 #include <gtk/gtk.h>
+
+#include "utils/custom_section.hpp"
 
 #define INFO_ROW_TYPE_BOX info_row_get_type()
 G_DECLARE_FINAL_TYPE(InfoRow, info_row, INFO_ROW, BOX, GtkBox);
@@ -9,13 +9,11 @@ G_DECLARE_FINAL_TYPE(InfoRow, info_row, INFO_ROW, BOX, GtkBox);
 struct _InfoRow
 {
   GtkBox box;
-  GtkLabel *label;
   GString  *label_str;
-  GtkLabel *value;
   GString  *value_str;
 };
 
-enum InfoRowProperties {
+enum InfoRowPropertyId: guint {
   LABEL = 1,
   VALUE,
 
@@ -76,10 +74,12 @@ static void info_row_class_init(InfoRowClass *klass)
   // child
   gtk_widget_class_set_template_from_resource(widget_class,
                                               "/dashboard/ui/info_row.ui");
-  gtk_widget_class_bind_template_child_full(GTK_WIDGET_CLASS(klass), "label", 1,
-                                            offsetof(InfoRow, label));
-  gtk_widget_class_bind_template_child_full(GTK_WIDGET_CLASS(klass), "value", 1,
-                                            offsetof(InfoRow, value));
+                                            
+  // dispose
+  gobj_class->dispose = info_row_dispose;
 }
 
-void register_info_row() { g_type_ensure(INFO_ROW_TYPE_BOX); }
+WIDGET_AUTOREG(register_info_row, 0)
+{
+    g_type_ensure(INFO_ROW_TYPE_BOX);
+}

@@ -1,10 +1,12 @@
 #include "widgets.hpp"
+#include "utils/custom_section.hpp"
 
-#include "info_row.hpp"
-#include "small_weather.hpp"
+extern const AutoCallFunc __start_widgets;
+extern const AutoCallFunc __stop_widgets;
 
 void register_widgets()
 {
-    register_info_row();
-    register_small_weather();
+    auto s = &__start_widgets;
+    auto e = &__stop_widgets;
+    call_all(s, e);
 }

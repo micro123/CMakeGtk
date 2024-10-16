@@ -12,27 +12,27 @@ Box root {
             orientation: vertical;
             spacing: 8;
 
-            $InfoRow {
+            $InfoRow weather_city {
                 label: "城市：";
                 value: "天河区";
             }
 
-            $InfoRow {
+            $InfoRow weather_text {
                 label: "天气：";
                 value: "多云";
             }
 
-            $InfoRow {
+            $InfoRow weather_temp {
                 label: "温度：";
                 value: "18~25℃";
             }
 
-            $InfoRow {
+            $InfoRow weather_humi {
                 label: "湿度：";
                 value: "76%";
             }
 
-            $InfoRow {
+            $InfoRow weather_update {
                 label: "更新：";
                 value: "19:25";
             }
@@ -45,7 +45,7 @@ Box root {
         }
 
         // 天气图标
-        Image {
+        Image weather_icon {
             width-request: 300;
             height-request: 300;
             pixel-size: 8;
@@ -64,7 +64,7 @@ Box root {
         orientation: horizontal;
         spacing: 2;
 
-        $SmallWeather {}
+        $SmallWeather next_1h {}
 
         Separator {
             css-classes: [
@@ -72,7 +72,7 @@ Box root {
             ];
         }
 
-        $SmallWeather {}
+        $SmallWeather next_2h {}
 
         Separator {
             css-classes: [
@@ -80,7 +80,7 @@ Box root {
             ];
         }
 
-        $SmallWeather {}
+        $SmallWeather next_3h {}
 
         Separator {
             css-classes: [
@@ -88,7 +88,7 @@ Box root {
             ];
         }
 
-        $SmallWeather {}
+        $SmallWeather next_4h {}
 
         Separator {
             css-classes: [
@@ -96,7 +96,7 @@ Box root {
             ];
         }
 
-        $SmallWeather {}
+        $SmallWeather next_5h {}
 
         Separator {
             css-classes: [
@@ -104,6 +104,6 @@ Box root {
             ];
         }
 
-        $SmallWeather {}
+        $SmallWeather next_6h {}
     }
 }

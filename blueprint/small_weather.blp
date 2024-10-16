@@ -3,32 +3,33 @@ using Gtk 4.0;
 template $SmallWeather : Box {
     orientation: vertical;
     halign: center;
+    valign: end;
     vexpand: true;
     hexpand: true;
 
     Image {
         width-request: 80;
         height-request: 80;
-        resource: "/dashboard/icons/999.png";
+        resource: bind template.icon;
     }
 
     Label {
-        label: "多云";
+        label: bind template.text;
         css-classes: ["small_weather_label"];
     }
 
     Label {
-        label: "17~25℃";
+        label: bind template.temp;
         css-classes: ["small_weather_label"];
     }
 
     Label {
-        label: "46%";
+        label: bind template.humi;
         css-classes: ["small_weather_label"];
     }
 
     Label {
-        label: "17:00";
+        label: bind template.time;
         css-classes: ["small_weather_label"];
     }
 }
