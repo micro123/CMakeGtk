@@ -1,4 +1,5 @@
 {
+    "git.autoRepositoryDetection": false,
     "files.associations": {
         "functional": "cpp",
         "initializer_list": "cpp",
