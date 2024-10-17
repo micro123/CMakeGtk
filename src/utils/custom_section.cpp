@@ -4,11 +4,11 @@
 #include <cassert>
 #include <vector>
 
-void call_all(const AutoCallFunc *begin, const AutoCallFunc *end)
+void call_all(const FuncDecl *begin, const FuncDecl *end)
 {
     assert(begin && end && "must not null");
     assert(end > begin && "invalid range");
-    std::vector<AutoCallFunc> calls(begin, end);
+    std::vector<FuncDecl> calls(begin, end);
     std::sort(std::begin(calls), std::end(calls), [](auto a, auto b){
         return a.priority < b.priority;
     });

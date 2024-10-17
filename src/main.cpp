@@ -7,6 +7,7 @@
 
 #include "views/root_view.hpp"
 #include "widgets/widgets.hpp"
+#include "tests/all_tests.hpp"
 
 static void load_app_style() {
     auto provider = Gtk::CssProvider::create();
@@ -18,6 +19,9 @@ static void load_app_style() {
 
 int main(int argc, char *argv[])
 {
+    // run tests
+    run_all_tests();
+
     auto app = Gtk::Application::create("com.example.dashboard", Gtk::Application::Flags::DEFAULT_FLAGS);
     app->signal_activate().connect([app]{
         adw_style_manager_set_color_scheme(adw_style_manager_get_default(), ADW_COLOR_SCHEME_FORCE_DARK);
