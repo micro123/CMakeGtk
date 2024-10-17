@@ -5,6 +5,10 @@ label {
 }
 */
 
+* {
+    font-family: 'Noto Sans Mono', 'Blobmoji';
+}
+
 .info_row_label {
     font-size: 14px;
     color: darkgray;

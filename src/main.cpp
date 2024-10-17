@@ -22,12 +22,15 @@ int main(int argc, char *argv[])
     app->signal_activate().connect([app]{
         adw_style_manager_set_color_scheme(adw_style_manager_get_default(), ADW_COLOR_SCHEME_FORCE_DARK);
 
+        // styles
         load_app_style();
 
         // register widgets
         register_widgets();
 
+        // create views
         setup_root_view(app);
     });
+    app->register_application();
     return app->run(argc, argv);
 }
