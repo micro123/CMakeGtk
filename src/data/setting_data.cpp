@@ -12,7 +12,7 @@ public:
         return settings;
     }
 
-    int  GetValue(const char *key, int default_value) {
+    gint  GetValue(const char *key, gint default_value) {
         GError *err = nullptr;
         int ret = g_key_file_get_integer(keyfile_, GROUP_NAME, key, &err);
         if (err) {
@@ -22,8 +22,51 @@ public:
         return ret;
     }
 
-    void SetValue(const char *key, int value) {
+    void SetValue(const char *key, gint value) {
         g_key_file_set_integer(keyfile_, GROUP_NAME, key, value);
+    }
+
+
+    guint  GetValue(const char *key, guint default_value) {
+        GError *err = nullptr;
+        guint ret = (guint)g_key_file_get_uint64(keyfile_, GROUP_NAME, key, &err);
+        if (err) {
+            ret = default_value;
+            g_error_free(err);
+        }
+        return ret;
+    }
+
+    void SetValue(const char *key, guint value) {
+        g_key_file_set_uint64(keyfile_, GROUP_NAME, key, value);
+    }
+
+    gint64  GetValue(const char *key, gint64 default_value) {
+        GError *err = nullptr;
+        gint64 ret = g_key_file_get_int64(keyfile_, GROUP_NAME, key, &err);
+        if (err) {
+            ret = default_value;
+            g_error_free(err);
+        }
+        return ret;
+    }
+
+    void SetValue(const char *key, gint64 value) {
+        g_key_file_set_int64(keyfile_, GROUP_NAME, key, value);
+    }
+
+    guint64  GetValue(const char *key, guint64 default_value) {
+        GError *err = nullptr;
+        guint64 ret = g_key_file_get_uint64(keyfile_, GROUP_NAME, key, &err);
+        if (err) {
+            ret = default_value;
+            g_error_free(err);
+        }
+        return ret;
+    }
+
+    void SetValue(const char *key, guint64 value) {
+        g_key_file_set_uint64(keyfile_, GROUP_NAME, key, value);
     }
 
     double  GetValue(const char *key, double default_value) {
@@ -37,6 +80,20 @@ public:
     }
 
     void SetValue(const char *key, double value) {
+        g_key_file_set_double(keyfile_, GROUP_NAME, key, value);
+    }
+
+    float  GetValue(const char *key, float default_value) {
+        GError *err = nullptr;
+        float ret = (float)g_key_file_get_double(keyfile_, GROUP_NAME, key, &err);
+        if (err) {
+            ret = default_value;
+            g_error_free(err);
+        }
+        return ret;
+    }
+
+    void SetValue(const char *key, float value) {
         g_key_file_set_double(keyfile_, GROUP_NAME, key, value);
     }
 
@@ -56,6 +113,20 @@ public:
     
     void SetValue(const char *key, const std::string& value) {
         g_key_file_set_string(keyfile_, GROUP_NAME, key, value.c_str());
+    }
+
+    bool  GetValue(const char *key, bool default_value) {
+        GError *err = nullptr;
+        bool ret = g_key_file_get_boolean(keyfile_, GROUP_NAME, key, &err);
+        if (err) {
+            ret = default_value;
+            g_error_free(err);
+        }
+        return ret;
+    }
+    
+    void SetValue(const char *key, bool value) {
+        g_key_file_set_boolean(keyfile_, GROUP_NAME, key, value);
     }
 
 
@@ -96,25 +167,66 @@ private:
     gchar      *setting_file_path_;
 };
 
-int  settings_get_int(const char *key, int def) {
+#define DEFINE_SETTING_R(type) \
+type settings_get_##type(const char *key, type def)
+#define DEFINE_SETTING_W(type) \
+void settings_set_##type(const char *key, type val)
+
+
+DEFINE_SETTING_R(gint) {
     return Settings::instance().GetValue(key, def);
 }
-void settings_set_int(const char *key, int value) {
-    return Settings::instance().SetValue(key, value);
+DEFINE_SETTING_W(gint) {
+    return Settings::instance().SetValue(key, val);
 }
 
-double  settings_get_double(const char *key, double def) {
+DEFINE_SETTING_R(guint) {
     return Settings::instance().GetValue(key, def);
 }
-void    settings_set_double(const char *key, double value) {
-    return Settings::instance().SetValue(key, value);
+DEFINE_SETTING_W(guint) {
+    return Settings::instance().SetValue(key, val);
 }
 
-std::string settings_get_str(const char *key, const std::string def) {
+DEFINE_SETTING_R(gint64) {
+    return Settings::instance().GetValue(key, def);
+}
+DEFINE_SETTING_W(gint64) {
+    return Settings::instance().SetValue(key, val);
+}
+
+DEFINE_SETTING_R(guint64) {
+    return Settings::instance().GetValue(key, def);
+}
+DEFINE_SETTING_W(guint64) {
+    return Settings::instance().SetValue(key, val);
+}
+
+DEFINE_SETTING_R(float) {
+    return Settings::instance().GetValue(key, def);
+}
+DEFINE_SETTING_W(float) {
+    return Settings::instance().SetValue(key, val);
+}
+
+DEFINE_SETTING_R(double) {
+    return Settings::instance().GetValue(key, def);
+}
+DEFINE_SETTING_W(double) {
+    return Settings::instance().SetValue(key, val);
+}
+
+DEFINE_SETTING_R(str) {
     return Settings::instance().GetValue(key, def.c_str());
 }
-void settings_set_str(const char *key, const std::string &value) {
-    return Settings::instance().SetValue(key, value);
+DEFINE_SETTING_W(str) {
+    return Settings::instance().SetValue(key, val);
+}
+
+DEFINE_SETTING_R(boolean) {
+    return Settings::instance().GetValue(key, def);
+}
+DEFINE_SETTING_W(boolean) {
+    return Settings::instance().SetValue(key, val);
 }
 
 void settings_reload() {

@@ -7,8 +7,25 @@
 #include "data/setting_data.hpp"
 #include "utils/gobj_prop.hpp"
 
+// Get Widget
 #define GW(builder, group,field,type) \
     group.field = type(gtk_builder_get_object(builder, #group "" #field))
+
+using str = std::string;
+
+// setting to widget
+#define s2w(w, sk, t, p, def) \
+do { \
+    t sv = settings_get_##t(sk, def); \
+    set_prop(w, p, sv); \
+} while(0)
+
+// widget to setting
+#define w2s(w, sk, t, p) \
+do { \
+    t wv = get_prop<t>(w, p); \
+    settings_set_##t(sk, wv); \
+} while(0)
 
 class SettingBussiness {
 public:
@@ -54,16 +71,39 @@ public:
         settings_reload(); // reload config file
         {
             // qweather
-            auto city_id = settings_get_str(SETTING_KEY_QWEATHER_CITY_ID, "123");
-            set_prop(qweather_.city_id, "text", city_id);
+            s2w(qweather_.city_id, SETTING_KEY_QWEATHER_CITY_ID, str, "text", "");
+            s2w(qweather_.api_key, SETTING_KEY_QWEATHER_API_KEY, str, "text", "");
+            s2w(qweather_.update_interval, SETTING_KEY_QWEATHER_UPDATE_INTERVAL, guint, "selected", ~guint(0));
+
+            // xxt bus
+            s2w(xxt_bus_.bus_info, SETTING_KEY_XXT_BUS_INFO_TEXT, str, "text", "");
+            s2w(xxt_bus_.update_interval, SETTING_KEY_XXT_BUS_UPDATE_INTERVAL, guint, "selected", ~guint(0));
+
+            // router
+            s2w(router_.ip_addr, SETTING_KEY_ROUTER_IP_ADDRESS, str, "text", "");
+            s2w(router_.port_num, SETTING_KEY_ROUTER_PORT, double, "value", 19999);
+            s2w(router_.ethernet_device, SETTING_KEY_ROUTER_NET_DEV, guint, "selected", ~guint(0));
+            s2w(router_.thermal_sensor, SETTING_KEY_ROUTER_TEMP_SENSOR, guint, "selected", ~guint(0));
         }
     }
 
     void save() {
         g_log("Dashboard", G_LOG_LEVEL_WARNING, "Setting Save");
         {
-            auto city_id = get_prop<std::string>(qweather_.city_id, "text");
-            settings_set_str(SETTING_KEY_QWEATHER_CITY_ID, city_id);
+            // qweather
+            w2s(qweather_.city_id, SETTING_KEY_QWEATHER_CITY_ID, str, "text");
+            w2s(qweather_.api_key, SETTING_KEY_QWEATHER_API_KEY, str, "text");
+            w2s(qweather_.update_interval, SETTING_KEY_QWEATHER_UPDATE_INTERVAL, guint, "selected");
+
+            // xxt bus
+            w2s(xxt_bus_.bus_info, SETTING_KEY_XXT_BUS_INFO_TEXT, str, "text");
+            w2s(xxt_bus_.update_interval, SETTING_KEY_XXT_BUS_UPDATE_INTERVAL, guint, "selected");
+
+            // router
+            w2s(router_.ip_addr, SETTING_KEY_ROUTER_IP_ADDRESS, str, "text");
+            w2s(router_.port_num, SETTING_KEY_ROUTER_PORT, double, "value");
+            w2s(router_.ethernet_device, SETTING_KEY_ROUTER_NET_DEV, guint, "selected");
+            w2s(router_.thermal_sensor, SETTING_KEY_ROUTER_TEMP_SENSOR, guint, "selected");
         }
         settings_save();
     }

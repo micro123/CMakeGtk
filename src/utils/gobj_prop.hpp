@@ -8,7 +8,8 @@
 namespace internal {
     template <typename T>
     struct GValueCast{ 
-        static T cast_from(const GValue &value); // No Implementation Defined
+        static T     cast_from(const GValue &value); // No Implementation Defined
+        static GType value_type();
     };
 
 #ifndef TEMPLATE_IMPL

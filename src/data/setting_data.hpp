@@ -17,15 +17,28 @@
 #define SETTING_KEY_ROUTER_TEMP_SENSOR "router_temp_sensor"
 
 #include <string>
+#include <glib.h>
 
-int  settings_get_int(const char *key, int def);
-void settings_set_int(const char *key, int value);
+using str = std::string;
+using boolean = bool;
 
-double  settings_get_double(const char *key, double def);
-void    settings_set_double(const char *key, double value);
+#define SETTING_LIST(EXPANDER) \
+    EXPANDER(gint);            \
+    EXPANDER(guint);           \
+    EXPANDER(gint64);          \
+    EXPANDER(guint64);         \
+    EXPANDER(float);           \
+    EXPANDER(double);          \
+    EXPANDER(str);             \
+    EXPANDER(boolean)
 
-std::string settings_get_str(const char *key, const std::string def);
-void settings_set_str(const char *key, const std::string &value);
+#define DECLARE_SETTING_TYPE(type) \
+type settings_get_##type(const char *key, type def); \
+void settings_set_##type(const char *key, type val)
+
+SETTING_LIST(DECLARE_SETTING_TYPE);
+
+#undef DECLARE_SETTING_TYPE
 
 void settings_reload();
 void settings_save();
