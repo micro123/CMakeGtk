@@ -3,7 +3,11 @@
 #include <string>
 #include <glib.h>
 
-#define GROUP_NAME "generial"
+#include "utils/glib_utility.hpp"
+
+#define GROUP_NAME   "generial"
+#define G_LOG_DOMAIN "Settings"
+
 
 class Settings {
 public:
@@ -17,7 +21,7 @@ public:
         int ret = g_key_file_get_integer(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -32,7 +36,7 @@ public:
         guint ret = (guint)g_key_file_get_uint64(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -46,7 +50,7 @@ public:
         gint64 ret = g_key_file_get_int64(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -60,7 +64,7 @@ public:
         guint64 ret = g_key_file_get_uint64(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -74,7 +78,7 @@ public:
         double ret = g_key_file_get_double(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -88,7 +92,7 @@ public:
         float ret = (float)g_key_file_get_double(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -103,7 +107,7 @@ public:
         gchar *cstr = g_key_file_get_string(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         } else {
             ret.assign(cstr);
             g_free(cstr);
@@ -120,7 +124,7 @@ public:
         bool ret = g_key_file_get_boolean(keyfile_, GROUP_NAME, key, &err);
         if (err) {
             ret = default_value;
-            g_error_free(err);
+            ERR_LOG(err);
         }
         return ret;
     }
@@ -136,23 +140,28 @@ public:
             GError *err = nullptr;
             if (!g_key_file_load_from_file(keyfile_, setting_file_path_, G_KEY_FILE_NONE, &err))
             {
-                g_error_free(err);
+                ERR_LOG(err);
             }
         }
+        else
+            g_warning("setting file not exits!");
     }
 
     void Save() {
         GError *err = nullptr;
         if (!g_key_file_save_to_file(keyfile_, setting_file_path_, &err))
         {
-            g_error_free(err);
+            ERR_LOG(err);
         }
     }
 private:
     Settings() {
         keyfile_ = g_key_file_new();
-        auto const cfg_dir = g_build_path("/", g_get_user_config_dir(), g_get_application_name(), nullptr);
-        g_mkdir_with_parents(cfg_dir, 0644);
+        auto const cfg_dir = g_build_path("/", g_get_user_config_dir(), g_get_prgname(), nullptr);
+        if (-1 == g_mkdir_with_parents(cfg_dir, 0755))
+        {
+            perror(cfg_dir);
+        }
         setting_file_path_ = g_build_path("/", cfg_dir, "dashboard.ini", nullptr);
         g_free(cfg_dir);
         Load();
@@ -234,4 +243,9 @@ void settings_reload() {
 }
 void settings_save() {
     Settings::instance().Save();
+}
+
+#include "utils/custom_section.hpp"
+AFTER_APP(ensure_settings_loaded, 0) {
+    Settings::instance().Load();
 }

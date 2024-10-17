@@ -29,7 +29,7 @@ do { \
 
 class SettingBussiness {
 public:
-    SettingBussiness(GtkBuilder *builder, AdwTabPage *page) {
+    SettingBussiness(GtkBuilder *builder) {
         auto cb = Glib::wrap(builder);
 
         // entries
@@ -67,7 +67,7 @@ public:
     }
 
     void reload() {
-        g_log("Dashboard", G_LOG_LEVEL_WARNING, "Setting Load");
+        g_info("Setting Load");
         settings_reload(); // reload config file
         {
             // qweather
@@ -88,7 +88,7 @@ public:
     }
 
     void save() {
-        g_log("Dashboard", G_LOG_LEVEL_WARNING, "Setting Save");
+        g_info("Setting Save");
         {
             // qweather
             w2s(qweather_.city_id, SETTING_KEY_QWEATHER_CITY_ID, str, "text");
@@ -141,7 +141,7 @@ static void page_attached(SettingBussiness *b) {
 AdwTabPage *create_settings_tab(AdwTabView *host, const TabInfo *info, page_active_cb *active_cb) {
     GtkBuilder *builder = nullptr;
     auto p = create_page(host, info, builder);
-    auto x = new SettingBussiness(builder, p);
+    auto x = new SettingBussiness(builder);
     g_object_set_data(G_OBJECT(p), PAGE_PRIVATE_DATA_KEY, x);
     *active_cb = (page_active_cb)page_attached;
     return p;

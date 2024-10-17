@@ -15,6 +15,11 @@ void call_all(const FuncDecl *begin, const FuncDecl *end);
 extern const FuncDecl __start_##name; \
 extern const FuncDecl __stop_##name
 
+#define EMPTY_SECTION(name) \
+static __attribute__((section(#name),used)) const FuncDecl VARNAME(name) { \
+    .entry_point = nullptr, .priority = 0 \
+}
+
 #define REG_TO_SECTION(sec_name, fn, p) \
 static void fn(); \
 static __attribute__((section(#sec_name),used)) const FuncDecl VARNAME(sec_name) { \
@@ -22,20 +27,17 @@ static __attribute__((section(#sec_name),used)) const FuncDecl VARNAME(sec_name)
 }; \
 void fn()
 
-// #define WIDGET_SECTION __attribute__((section("widgets"),used))
-// #define WIDGET_AUTOREG(fn, p) \
-// static void fn(); \
-// static WIDGET_SECTION const FuncDecl VARNAME(widget) { \
-//     .entry_point = fn, \
-//     .priority = p, \
-// }; \
-// void fn()
-// SECTION_VARS(widgets);
-
 #define WIDGET_AUTOREG(fn, p) REG_TO_SECTION(my_widgets, fn, p)
 SECTION_VARS(my_widgets);
 
 #define TEST_AUTOREG(fn) REG_TO_SECTION(test_func, fn, 0)
 SECTION_VARS(test_func);
+
+#define AFTER_APP(fn, p) REG_TO_SECTION(after_app, fn, p)
+SECTION_VARS(after_app);
+
+#define BEFORE_APP(fn, p) REG_TO_SECTION(before_app, fn, p)
+SECTION_VARS(before_app);
+
 
 #endif /* CUSTOM_SECTION_HPP */

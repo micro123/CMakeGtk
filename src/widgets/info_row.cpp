@@ -77,6 +77,9 @@ static void info_row_class_init(InfoRowClass *klass)
                                             
   // dispose
   gobj_class->dispose = info_row_dispose;
+
+  // css name
+  gtk_widget_class_set_css_name(widget_class, "info_raw");
 }
 
 WIDGET_AUTOREG(register_info_row, 0)

@@ -14,6 +14,7 @@ void call_all(const FuncDecl *begin, const FuncDecl *end)
     });
 
     for (auto &x: calls) {
-        x.entry_point();
+        if (x.entry_point)
+            x.entry_point();
     }
 }

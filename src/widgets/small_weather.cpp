@@ -69,13 +69,16 @@ static void small_weather_class_init(SmallWeatherClass* klass)
     gclass->get_property = small_weather_get_property;
     small_weather_properties[ICON] = g_param_spec_string("icon","icon","weather icon's resource path", "/dashboard/icons/999.png", G_PARAM_READWRITE);
     small_weather_properties[TEXT] = g_param_spec_string("text","text","weather describe", "多云", G_PARAM_READWRITE);
-    small_weather_properties[TEMP] = g_param_spec_string("temp","temp","weather temperature", "16 ~ 24 ℃", G_PARAM_READWRITE);
+    small_weather_properties[TEMP] = g_param_spec_string("temp","temp","weather temperature", "16 ℃", G_PARAM_READWRITE);
     small_weather_properties[HUMI] = g_param_spec_string("humi","humi","weather humidity", "65 %", G_PARAM_READWRITE);
-    small_weather_properties[TIME] = g_param_spec_string("time","time","weather forecast time", "13:00", G_PARAM_READWRITE);
+    small_weather_properties[TIME] = g_param_spec_string("time","time","weather forecast time", "00:00", G_PARAM_READWRITE);
     g_object_class_install_properties(gclass, G_N_ELEMENTS(small_weather_properties), small_weather_properties);
 
     // dispose
     gclass->dispose = small_weather_dispose;
+
+    // css class
+    gtk_widget_class_set_css_name(GTK_WIDGET_CLASS(klass), "small_weather");
 }
 
 WIDGET_AUTOREG(register_small_weather, 0)

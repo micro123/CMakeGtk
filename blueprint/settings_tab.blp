@@ -17,13 +17,11 @@ Box root {
         Adw.EntryRow qweather_city_id {
           title: _("城市ID");
           text: "1102345";
-          show-apply-button: true;
         }
 
         Adw.EntryRow qweather_api_key {
           title: _("API密钥");
           text: "123456";
-          show-apply-button: true;
         }
 
         Adw.ComboRow qweather_update_interval {
@@ -41,6 +39,21 @@ Box root {
 
           selected: 3;
         }
+
+        [header-suffix]
+        LinkButton {
+          uri: "https://github.com/qwd/LocationList/blob/master/China-City-List-latest.csv";
+          child: Box {
+            orientation: horizontal;
+            spacing: 8;
+            Image {
+              icon-name: "system-search-symbolic";
+            }
+            Label {
+              label: "搜索城市ID";
+            }
+          };
+        }
       }
 
       Adw.PreferencesGroup {
@@ -49,7 +62,6 @@ Box root {
 
         Adw.EntryRow xxt_bus_bus_info {
           title: _("公交信息列表");
-          show-apply-button: true;
         }
 
         Adw.ComboRow xxt_bus_update_interval {
@@ -75,7 +87,6 @@ Box root {
 
         Adw.EntryRow router_ip_addr {
           title: _("路由器IP地址");
-          show-apply-button: true;
         }
 
         Adw.SpinRow router_port_num {
@@ -110,9 +121,7 @@ Box root {
   }
 
   Separator {
-    css-classes: [
-      ".horizental"
-    ];
+    orientation: horizontal;
   }
 
   Box {

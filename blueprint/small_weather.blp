@@ -7,28 +7,28 @@ template $SmallWeather : Box {
     vexpand: true;
     hexpand: true;
 
-    Image {
+    Image icon {
         width-request: 80;
         height-request: 80;
         resource: bind template.icon;
     }
 
-    Label {
+    Label text {
         label: bind template.text;
         css-classes: ["small_weather_label"];
     }
 
-    Label {
+    Label temp {
         label: bind template.temp;
         css-classes: ["small_weather_label"];
     }
 
-    Label {
+    Label humi {
         label: bind template.humi;
         css-classes: ["small_weather_label"];
     }
 
-    Label {
+    Label time {
         label: bind template.time;
         css-classes: ["small_weather_label"];
     }

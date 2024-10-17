@@ -17,6 +17,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cpr)
 
+FetchContent_Declare(
+    fmt
+    GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+    GIT_TAG 11.0.2
+)
+FetchContent_MakeAvailable(fmt)
+
 add_executable(Dashboard ${SRC_FILES})
 target_link_libraries(
     Dashboard
@@ -25,6 +32,7 @@ target_link_libraries(
     PkgConfig::adw
     nlohmann_json::nlohmann_json
     cpr::cpr
+    fmt::fmt
     all_resources
 )
 target_include_directories(

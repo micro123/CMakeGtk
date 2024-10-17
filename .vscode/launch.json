@@ -16,6 +16,10 @@
                 {
                     "name": "G_DEBUG",
                     "value": "fatal-criticals"
+                },
+                {
+                    "name": "G_MESSAGES_DEBUG",
+                    "value": "all"
                 }
             ],
             "externalConsole": false,
@@ -54,6 +58,10 @@
                 {
                     "name": "RUN_TESTS",
                     "value": "1"
+                },
+                {
+                    "name": "G_MESSAGES_DEBUG",
+                    "value": "all"
                 }
             ],
             "externalConsole": false,
