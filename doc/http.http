@@ -1,0 +1,37 @@
+### 获取网络上传下载信息
+GET http://192.168.199.1:19999/api/v1/data
+    ?format=json
+    &points=2
+    &group=average
+    &gtime=0
+    &options=s%7Cjsonwrap%7Cnonzero
+    &after=-2
+    &chart=net.br-lan
+    &dimensions=
+
+
+
+### 获取温度信息
+GET http://192.168.199.1:19999/api/v1/data
+    ?format=json
+    &points=2
+    &group=average
+    &gtime=0
+    &options=s%7Cjsonwrap%7Cnonzero
+    &after=-2
+    &chart=sensors.coretemp_isa_0000_temperature
+    &dimensions=
+
+
+### 查询图表
+GET http://192.168.199.1:19999/api/v1/charts
+
+### 运行时间
+GET http://192.168.199.1:19999/api/v1/data
+    ?format=json
+    &points=1
+    &gtime=0
+    &before=0
+    &after=-3
+    &chart=system.ram
+    &dimensions=used,buffers,free

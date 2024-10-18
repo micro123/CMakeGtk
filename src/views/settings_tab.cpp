@@ -1,4 +1,5 @@
 #include "settings_tab.hpp"
+#include <adwaita.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gtkmm/builder.h>
@@ -51,6 +52,7 @@ public:
             GW(builder, router_, ip_addr, ADW_ENTRY_ROW);
             GW(builder, router_, port_num, ADW_SPIN_ROW);
             GW(builder, router_, ethernet_device, ADW_COMBO_ROW);
+            GW(builder, router_, net_exachange, ADW_SWITCH_ROW);
             GW(builder, router_, thermal_sensor, ADW_COMBO_ROW);
             GW(builder, router_, fetch_devices, GTK_BUTTON);
         }
@@ -83,6 +85,7 @@ public:
             s2w(router_.ip_addr, SETTING_KEY_ROUTER_IP_ADDRESS, str, "text", "");
             s2w(router_.port_num, SETTING_KEY_ROUTER_PORT, double, "value", 19999);
             s2w(router_.ethernet_device, SETTING_KEY_ROUTER_NET_DEV, guint, "selected", ~guint(0));
+            s2w(router_.net_exachange, SETTING_KEY_ROUTER_NET_EXCHANGE, boolean, "active", false);
             s2w(router_.thermal_sensor, SETTING_KEY_ROUTER_TEMP_SENSOR, guint, "selected", ~guint(0));
         }
     }
@@ -103,6 +106,7 @@ public:
             w2s(router_.ip_addr, SETTING_KEY_ROUTER_IP_ADDRESS, str, "text");
             w2s(router_.port_num, SETTING_KEY_ROUTER_PORT, double, "value");
             w2s(router_.ethernet_device, SETTING_KEY_ROUTER_NET_DEV, guint, "selected");
+            w2s(router_.net_exachange, SETTING_KEY_ROUTER_NET_EXCHANGE, boolean, "active");
             w2s(router_.thermal_sensor, SETTING_KEY_ROUTER_TEMP_SENSOR, guint, "selected");
         }
         settings_save();
@@ -124,11 +128,12 @@ private:
 
     // router
     struct {
-        AdwEntryRow *ip_addr;
-        AdwSpinRow  *port_num;
-        AdwComboRow *ethernet_device;
-        AdwComboRow *thermal_sensor;
-        GtkButton   *fetch_devices;
+        AdwEntryRow  *ip_addr;
+        AdwSpinRow   *port_num;
+        AdwComboRow  *ethernet_device;
+        AdwSwitchRow *net_exachange;
+        AdwComboRow  *thermal_sensor;
+        GtkButton    *fetch_devices;
     } router_;
 };
 
