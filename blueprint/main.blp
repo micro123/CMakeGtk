@@ -6,12 +6,15 @@ Adw.ApplicationWindow root_window {
     height-request: 600;
     width-request: 1024;
     resizable: false;
+    decorated: false;
 
     Box {
         orientation: vertical;
         overflow: hidden;
 
         Adw.HeaderBar {
+            show-end-title-buttons: false;
+
             Button btn_prev_tab {
                 icon-name: "go-previous-symbolic";
                 tooltip-text: _("上一个页面");
@@ -22,10 +25,18 @@ Adw.ApplicationWindow root_window {
                 tooltip-text: _("下一个页面");
             }
 
+            [end]
+            Button btn_close {
+                icon-name: "window-close-symbolic";
+                tooltip-text: _("推出程序");
+            }
+            
+            [end]
             Button btn_show_settings {
                 icon-name: "applications-system-symbolic";
                 tooltip-text: _("转到程序设置");
             }
+
         }
 
         Adw.TabView tab_view {
