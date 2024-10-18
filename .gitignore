@@ -3,3 +3,6 @@
 resources/ui
 .idea/
 .cache/
+.vscode/
+!.vscode/launch.json
+

@@ -103,16 +103,30 @@ Box root {
           value: 19999.0;
         }
 
-        Adw.ComboRow router_ethernet_device {
+        Adw.EntryRow router_ethernet_device {
           title: _("选择网卡");
+
+          DropDown {
+            visible: false;
+            model: StringList {
+              strings: ["1","2","3"];
+            };
+          }
         }
 
         Adw.SwitchRow router_net_exachange {
           title: _("交换上行下行");
         }
 
-        Adw.ComboRow router_thermal_sensor {
+        Adw.EntryRow router_thermal_sensor {
           title: _("选择温度传感器");
+
+          DropDown {
+            visible: false;
+            model: StringList {
+              strings: ["1","2","3"];
+            };
+          }
         }
 
         [header-suffix]
