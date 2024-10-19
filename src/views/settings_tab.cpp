@@ -31,7 +31,7 @@ do { \
 class SettingBussiness {
 public:
     SettingBussiness(GtkBuilder *builder) {
-        auto cb = Glib::wrap(builder);
+        auto cb = Glib::wrap(builder, true);
 
         // entries
         {
@@ -149,5 +149,6 @@ AdwTabPage *create_settings_tab(AdwTabView *host, const TabInfo *info, page_acti
     auto x = new SettingBussiness(builder);
     g_object_set_data(G_OBJECT(p), PAGE_PRIVATE_DATA_KEY, x);
     *active_cb = (page_active_cb)page_attached;
+    g_object_unref(builder);
     return p;
 }

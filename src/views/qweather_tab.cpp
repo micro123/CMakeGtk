@@ -108,5 +108,6 @@ AdwTabPage *create_qweather_tab(AdwTabView *host, const TabInfo *info, page_acti
     auto p = create_page(host, info, builder);
     auto x = new WeatherBusiness(builder);
     g_object_set_data(G_OBJECT(p), PAGE_PRIVATE_DATA_KEY, x);
+    g_object_unref(builder);
     return p;
 }
