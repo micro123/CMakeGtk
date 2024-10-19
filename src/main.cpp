@@ -74,5 +74,7 @@ int main(int argc, char *argv[])
     });
     app->register_application();
 
+    app->add_action("quit", [app](){ app->quit(); });
+
     return app->run(argc, argv);
 }

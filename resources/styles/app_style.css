@@ -34,3 +34,13 @@ label {
 .positive_button {
     color: rgb(63, 225, 74);
 }
+
+.datetime_time_label {
+	font-size: 28px;
+	color: lightgreen;
+}
+
+.datetime_date_label {
+	font-size: 16px;
+	color: darkorchid;
+}

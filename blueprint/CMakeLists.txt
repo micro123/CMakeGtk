@@ -6,7 +6,7 @@ set(ui_files)
 
 foreach(blp ${BLP_FILES})
     get_filename_component(basename ${blp} NAME_WLE)
-    message(STATUS "add blueprint file: ${blp} => ${basename}")
+    # message(STATUS "add blueprint file: ${blp} => ${basename}")
     set(output_file ${CMAKE_SOURCE_DIR}/resources/ui/${basename}.ui)
     add_custom_command(
         OUTPUT  ${output_file}

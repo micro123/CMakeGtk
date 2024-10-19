@@ -1,0 +1,23 @@
+using Gtk 4.0;
+
+template $DateTime: Box {
+    halign: center;
+    orientation: horizontal;
+    spacing: 4;
+
+    Label {
+      label: bind template.time;
+      css-classes: ["datetime_time_label"];
+    }
+
+    Separator {
+      orientation: vertical;
+    }
+
+    Label {
+      label: bind template.date;
+      vexpand: true;
+      valign: end;
+      css-classes: ["datetime_date_label"];
+    }
+}

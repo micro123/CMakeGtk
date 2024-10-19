@@ -27,8 +27,9 @@ Adw.ApplicationWindow root_window {
 
             [end]
             Button btn_close {
-                icon-name: "window-close-symbolic";
-                tooltip-text: _("推出程序");
+                icon-name: "application-exit";
+                tooltip-text: _("退出程序");
+                action-name: "app.quit";
             }
             
             [end]
@@ -37,6 +38,8 @@ Adw.ApplicationWindow root_window {
                 tooltip-text: _("转到程序设置");
             }
 
+            [title]
+            $DateTime {}
         }
 
         Adw.TabView tab_view {
