@@ -3,9 +3,10 @@
 
 #include <widgets/kplot/kplot.h>
 
-static kpair  wave_points[100];
+static kpair  wave_points[1024];
 static kdata *series;
 static kplot *plot;
+static kplotcfg plot_cfg;
 
 MyWidget::MyWidget(): Glib::ObjectBase("MyWidget"), Gtk::Widget() {
     set_hexpand();
@@ -103,10 +104,14 @@ WIDGET_AUTOREG(register_my_widget, 10) {
 
     for (int i=0; i<std::size(wave_points); ++i) {
         wave_points[i].x = i;
-        wave_points[i].y = sin(2*i);
+        wave_points[i].y = sin(0.1*i);
     }
 
     series = kdata_array_alloc(wave_points, std::size(wave_points));
-    plot = kplot_alloc(nullptr);
-    kplot_attach_data(plot, series, KPLOT_LINESPOINTS, nullptr);
+    kplotcfg_defaults(&plot_cfg);
+    plot_cfg.extrema = EXTREMA_YMIN | EXTREMA_YMAX;
+    plot_cfg.extrema_ymin = -1.2;
+    plot_cfg.extrema_ymax =  1.2;
+    plot = kplot_alloc(&plot_cfg);
+    kplot_attach_data(plot, series, KPLOT_LINES, nullptr);
 }
