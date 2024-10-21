@@ -10,18 +10,19 @@ label {
 }
 
 .info_row_label {
-    font-size: 14px;
-    color: darkgray;
+    font-size: 20px;
+    color: rgb(144, 236, 193);
 }
 
 .info_row_value {
-    font-size: 42px;
+    font-size: 34px;
+    font-weight: bold;
     color: white;
 }
 
 .small_weather_label {
     font-size: 22px;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .custom_button {
@@ -42,5 +43,5 @@ label {
 
 .datetime_date_label {
 	font-size: 16px;
-	color: darkorchid;
+	color: rgb(104, 227, 243);
 }

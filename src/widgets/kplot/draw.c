@@ -606,7 +606,13 @@ kplotfont_defaults(struct kplotfont *font)
 	font->family = "serif";
 	font->sz = 12.0;
 	font->slant = CAIRO_FONT_SLANT_NORMAL;
-	font->weight = CAIRO_FONT_WEIGHT_NORMAL;
+	font->weight = CAIRO_FONT_WEIGHT_BOLD;
+
+	font->clr.type = KPLOTCTYPE_RGBA;
+	font->clr.rgba[0] = 1.0;
+	font->clr.rgba[1] = 1.0;
+	font->clr.rgba[2] = 1.0;
+	font->clr.rgba[3] = 1.0;
 }
 
 void

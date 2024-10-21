@@ -9,9 +9,10 @@ struct CurrentWeatherData {
         std::string text;
         std::string icon;
         std::string temp;
+        std::string feelsLike;
         std::string humidity;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(NowData, text, icon, temp, humidity);
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(NowData, text, icon, temp, feelsLike, humidity);
     };
 
     std::string code;

@@ -19,6 +19,7 @@ public:
         current_.city = gtk_builder_get_object(builder, "weather_city");
         current_.text = gtk_builder_get_object(builder, "weather_text");
         current_.temp = gtk_builder_get_object(builder, "weather_temp");
+        current_.feels = gtk_builder_get_object(builder, "weather_feels");
         current_.humi = gtk_builder_get_object(builder, "weather_humi");
         current_.time = gtk_builder_get_object(builder, "weather_time");
 
@@ -61,6 +62,7 @@ public:
             set_prop(current_.icon, "resource", fmt::format("/dashboard/icons/{}.png", now.icon));
             set_prop(current_.text, "value", now.text);
             set_prop(current_.temp, "value", fmt::format("{} ℃", now.temp));
+            set_prop(current_.feels, "value", fmt::format("{} ℃", now.feelsLike));
             set_prop(current_.humi, "value", fmt::format("{} %", now.humidity));
             set_prop(current_.time, "value", fmt::format("{:%H:%M}", fmt::localtime(time(NULL))));
         }
@@ -93,6 +95,7 @@ private:
         GObject *city;
         GObject *text;
         GObject *temp;
+        GObject *feels;
         GObject *humi;
         GObject *time;
     } current_;
