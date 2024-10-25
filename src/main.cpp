@@ -1,4 +1,5 @@
 #include <gdkmm/display.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include <gtkmm/application.h>
 #include <adwaita.h>
@@ -49,11 +50,10 @@ static void load_app_style() {
 int main(int argc, char *argv[])
 {
     // g_log_set_default_handler(my_log_handler, nullptr);
+    before_app_init();
 
     // run tests
     run_all_tests();
-
-    before_app_init();
 
     auto app = Gtk::Application::create("com.example.dashboard", Gtk::Application::Flags::DEFAULT_FLAGS);
     app->signal_activate().connect([app]{
