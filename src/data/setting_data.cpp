@@ -4,10 +4,13 @@
 #include <glib.h>
 
 #include "utils/glib_utility.hpp"
+#include "utils/path_tool.hpp"
+#include "utils/io_tool.hpp"
+#include "utils/crypto_tool.hpp"
 
 #define GROUP_NAME   "generial"
-#define G_LOG_DOMAIN "Settings"
 
+#define SETTINGS_PASSOWRD "dashboard_password"
 
 class Settings {
 public:
@@ -135,13 +138,22 @@ public:
 
 
     void Load() {
-        if (g_file_test(setting_file_path_, G_FILE_TEST_EXISTS))
+        if (g_file_test(setting_file_path_.c_str(), G_FILE_TEST_EXISTS))
         {
+            std::string content = ReadTextFile(setting_file_path_);
+            if (!content.empty()) {
+                std::string temp;
+                if (DecryptDataAes256(content, SETTINGS_PASSOWRD, temp))
+                {
+                    std::swap(content, temp);
+                }
+            }
+            GBytes *bytes = g_bytes_new(content.data(), content.length());
             GError *err = nullptr;
-            if (!g_key_file_load_from_file(keyfile_, setting_file_path_, G_KEY_FILE_NONE, &err))
-            {
+            if (!g_key_file_load_from_bytes(keyfile_, bytes, G_KEY_FILE_NONE, &err)) {
                 ERR_LOG(err);
             }
+            g_bytes_unref(bytes);
         }
         else
             g_warning("setting file not exits!");
@@ -149,31 +161,31 @@ public:
 
     void Save() {
         GError *err = nullptr;
-        if (!g_key_file_save_to_file(keyfile_, setting_file_path_, &err))
-        {
-            ERR_LOG(err);
+        gsize len = 0;
+        gchar* content = g_key_file_to_data(keyfile_, &len, NULL);
+        if (content) {
+            std::string encrypted = EncryptDataAes256(content, SETTINGS_PASSOWRD);
+            g_free(content);
+            WriteTextFile(setting_file_path_, encrypted);
         }
+        // if (!g_key_file_save_to_file(keyfile_, setting_file_path_.c_str(), &err))
+        // {
+        //     ERR_LOG(err);
+        // }
     }
 private:
     Settings() {
         keyfile_ = g_key_file_new();
-        auto const cfg_dir = g_build_path("/", g_get_user_config_dir(), g_get_prgname(), nullptr);
-        if (-1 == g_mkdir_with_parents(cfg_dir, 0755))
-        {
-            perror(cfg_dir);
-        }
-        setting_file_path_ = g_build_path("/", cfg_dir, "dashboard.ini", nullptr);
-        g_free(cfg_dir);
+        setting_file_path_ = "dashboard.dat"_CP;
         Load();
     }
     ~Settings() {
         Save();
         g_key_file_free(keyfile_);
-        g_free(setting_file_path_);
     }
 
-    GKeyFile   *keyfile_;
-    gchar      *setting_file_path_;
+    GKeyFile    *keyfile_;
+    std::string  setting_file_path_;
 };
 
 #define DEFINE_SETTING_R(type) \
