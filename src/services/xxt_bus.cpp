@@ -12,9 +12,13 @@
 
 #include <nlohmann/json.hpp>
 
+#include "nlohmann/detail/macro_scope.hpp"
+#include "nlohmann/json_fwd.hpp"
 #include "utils/custom_section.hpp"
 #include "http/http_client.hpp"
 #include "utils/json_adl.hpp"
+#include "utils/io_tool.hpp"
+#include "utils/path_tool.hpp"
 
 static long long CurrentTime_us();
 template <typename T> std::string minify_json(const T &obj);
@@ -33,6 +37,10 @@ static struct ApiData {
     std::string baseurl;
     std::string version;
     std::string versiontype;
+
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(
+        ApiData, apikey, appid, devno, baseurl, version, versiontype
+    )
 } g_api_data;
 
 struct BaseReqParam {
@@ -339,7 +347,9 @@ BEFORE_APP(random_seed, 1)
 {
     g_random_set_seed(time(NULL));
     // load private config data
-    
+    auto content = ReadTextFile("xxt.json"_CP);
+    auto j = nlohmann::json::parse(content);
+    j.get_to(g_api_data);
 }
 
 TEST_AUTOREG(xxt_bus_tests) {
