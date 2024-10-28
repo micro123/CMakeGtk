@@ -8,9 +8,9 @@ AdwTabPage * create_router_tab(AdwTabView *host, const TabInfo *info, page_activ
     auto p = create_page(host, info, builder);
     // TODO: 配置UI逻辑
 
-    auto b = Glib::wrap(builder, true);
-    auto mw = b->get_widget_derived<MyWidget>(b, "test");
-    mw->property_number() = 21;
+    // auto b = Glib::wrap(builder, true);
+    // auto mw = b->get_widget_derived<MyWidget>(b, "test");
+    // mw->property_number() = 21;
 
     g_object_unref(builder);
     return p;

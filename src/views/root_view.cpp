@@ -45,6 +45,15 @@ public:
 
         // page_attached
         g_signal_connect(G_OBJECT(tab_view), "notify::selected-page", G_CALLBACK(&RootView::OnTabPageSelect), this);
+
+        // additional actions
+        app->add_action("next-page", [this]{ tab_view_page_mod(1); });
+        app->add_action("prev-page", [this]{ tab_view_page_mod(-1); });
+        app->add_action("settings-page", [this]{ 
+            adw_tab_view_set_selected_page(tab_view, tab_pages[T_Settings].page);
+        });
+
+        // main_window->add_controller(const Glib::RefPtr<EventController> &controller)
     }
 
     ~RootView() {
