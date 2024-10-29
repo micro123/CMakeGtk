@@ -1,4 +1,6 @@
 #include "root_view.hpp"
+#include <glibconfig.h>
+#include <glibmm/varianttype.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 
@@ -47,13 +49,24 @@ public:
         g_signal_connect(G_OBJECT(tab_view), "notify::selected-page", G_CALLBACK(&RootView::OnTabPageSelect), this);
 
         // additional actions
+        app->add_action_with_parameter("to-page", Glib::VARIANT_TYPE_INT32, [this](const Glib::VariantBase &index) {
+            gint32 idx = index.get_dynamic<gint32>();
+            if (idx < 0 || idx >= T_CNT)
+                idx = T_Settings;
+            adw_tab_view_set_selected_page(tab_view, tab_pages[idx].page);
+        });
         app->add_action("next-page", [this]{ tab_view_page_mod(1); });
         app->add_action("prev-page", [this]{ tab_view_page_mod(-1); });
-        app->add_action("settings-page", [this]{ 
-            adw_tab_view_set_selected_page(tab_view, tab_pages[T_Settings].page);
-        });
 
-        // main_window->add_controller(const Glib::RefPtr<EventController> &controller)
+        app->set_accel_for_action("app.next-page", "Right");
+        app->set_accel_for_action("app.prev-page", "Left");
+        app->set_accels_for_action("app.to-page(-1)", {"Up","Down", "s"});
+        app->set_accels_for_action("app.quit", {"Escape","q"});
+
+        // pages
+        app->set_accel_for_action("app.to-page(0)", "1");
+        app->set_accel_for_action("app.to-page(1)", "2");
+        app->set_accel_for_action("app.to-page(2)", "3");
     }
 
     ~RootView() {
